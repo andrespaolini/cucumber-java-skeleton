@@ -4,15 +4,24 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Person {
-    public void moveTo(Integer distance) {
+
+    private final List<String> messagesHeard = new ArrayList<>();
+    private final Network network;
+
+    public Person(Network network) {
+        this.network = network;
+        network.subscribe(this);
     }
 
     public void shout(String message) {
+        network.broadcast(message);
+    }
+
+    public void hear(String message){
+        messagesHeard.add(message);
     }
 
     public List<String> getMessagesHeard() {
-        List<String> results = new ArrayList<>();
-        results.add("free bagels at Sean's");
-        return results;
+        return messagesHeard;
     }
 }
