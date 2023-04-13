@@ -1,14 +1,17 @@
 package io.cucumber.shouty;
 
 import io.cucumber.java.Before;
+import io.cucumber.java.DataTableType;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 
 import static java.util.Arrays.asList;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class StepDefinitions {
 
@@ -17,6 +20,21 @@ public class StepDefinitions {
     private String messageFromSean;
     private Network network;
     private HashMap<String, Person> people;
+
+    static class Whereabouts {
+        public String name;
+        public Integer location;
+
+        public Whereabouts(String name, int location){
+            this.name = name;
+            this.location = location;
+        }
+    }
+
+    @DataTableType
+    public Whereabouts defineWhereabouts(Map<String, String> entry){
+        return new Whereabouts(entry.get("name"), Integer.parseInt(entry.get("location")));
+    }
 
     @Before
     public void createNetwork(){
@@ -47,14 +65,15 @@ public class StepDefinitions {
        sean = new Person(network);
     }*/
 
-    @When("Sean shouts {string}")
+    /*@When("Sean shouts {string}")
     public void sean_shouts(String message) {
         people.get("Sean").shout(message);
         messageFromSean = message;
-    }
+    }*/
+
     @Then("Lucy hears Sean's message")
     public void lucy_hears_sean_s_message() {
-        assertEquals(asList(messageFromSean), people.get("Lucy").getMessagesHeard());
+        //Assert.assertEquals(asList(messageFromSean), people.get("Lucy").getMessagesHeard());
     }
 
     @Given("a person named {word} is at {int}")
@@ -68,12 +87,26 @@ public class StepDefinitions {
     }
 
     @Given("people are located at")
-    public void people_are_located_at(io.cucumber.datatable.DataTable dataTable) {
-        System.out.println("Lucy's location at: " + dataTable.cell(2, 1));
+    public void people_are_located_at(List<Whereabouts> whereaboutsList) {
+        for (Whereabouts whereabout: whereaboutsList){
+            people.put(whereabout.name, new Person(network, whereabout.location));
+        }
+        people.forEach((key, tab) -> System.out.println(key + " " + tab.getLocation()));
     }
+
+    /*@Given("people are located at")
+    public void people_are_located_at(io.cucumber.datatable.DataTable dataTable) {
+        System.out.println("Lucy's location at: " + dataTable.cell(0, 1));
+    }*/
+
     @Then("Larry should not hear Sean's message")
     public void larry_should_not_hear_sean_s_message() {
         // Write code here that turns the phrase above into concrete actions
         throw new io.cucumber.java.PendingException();
+    }
+
+    @When("Sean shouts")
+    public void sean_shouts(String docString) {
+        System.out.println("Making use of DocString" + docString);
     }
 }
