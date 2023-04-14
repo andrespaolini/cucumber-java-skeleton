@@ -31,10 +31,10 @@ Feature: Hear shout
     Scenario: Listener is within range
       Given the range is 100
       And people are located at
-        |1 |name |notes |
-        |0 |sean        |hell  |
-        |50 |lucy     |test  |
-      When Sean shouts "free bagels at Sean's"
+        |location |name |
+        |0        |sean |
+        |50       |lucy |
+      When Sean screams "free bagels at Sean's"
       Then Lucy hears Sean's message
 
     @focus @smoke
@@ -44,5 +44,5 @@ Feature: Hear shout
       |name |location |notes |
       |sean |0        |hell  |
       |lucy |50       |test  |
-      When Sean shouts "free bagels at Sean's"
+      When Sean screams "free bagels at Sean's"
       Then Larry should not hear Sean's message

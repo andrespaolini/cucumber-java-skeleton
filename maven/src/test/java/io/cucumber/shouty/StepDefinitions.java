@@ -109,4 +109,9 @@ public class StepDefinitions {
     public void sean_shouts(String docString) {
         System.out.println("Making use of DocString" + docString);
     }
+
+    @When("Sean screams {string}")
+    public void sean_screams(String message) {
+       System.out.println("Sean screams: " + message);
+    }
 }
