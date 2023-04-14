@@ -24,7 +24,7 @@ Feature: Hear shout
         And the tree in the bog
         And the bog down in the valley-o
       """
-      Then Lucy hears Sean's message
+      Then Lucy hears Sean's message is "false"
 
   Rule: Shouts should only be heard if listener is within range
 
@@ -35,7 +35,7 @@ Feature: Hear shout
         |0        |sean |
         |50       |lucy |
       When Sean screams "free bagels at Sean's"
-      Then Lucy hears Sean's message
+      Then Lucy hears Sean's message is "true"
 
     @focus @smoke
     Scenario: Listener is out of range

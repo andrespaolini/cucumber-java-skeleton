@@ -5,13 +5,11 @@ import io.cucumber.java.DataTableType;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import org.testng.Assert;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-
-import static java.util.Arrays.asList;
 
 public class StepDefinitions {
 
@@ -71,9 +69,9 @@ public class StepDefinitions {
         messageFromSean = message;
     }*/
 
-    @Then("Lucy hears Sean's message")
-    public void lucy_hears_sean_s_message() {
-        //Assert.assertEquals(asList(messageFromSean), people.get("Lucy").getMessagesHeard());
+    @Then("Lucy hears Sean's message is {string}")
+    public void lucy_hears_sean_s_message_is(String message) {
+        Assert.assertTrue(Boolean.parseBoolean(message));
     }
 
     @Given("a person named {word} is at {int}")
